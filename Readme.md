@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://github.com/subhiashraf912/InviteTracker">
-    <img src="https://cdn.discordapp.com/attachments/900321704289656872/913813318739836948/Comp_1_00000.png" height="128">
+    <img src="https://cdn.discordapp.com/attachments/900321704289656872/913816621724876820/Comp_1_00000.png" height="128">
     <h1 align="center">Discord Invite Tracker</h1>
   </a>
 </p>
