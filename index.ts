@@ -1,3 +1,3 @@
-import InviteTracker from "./src/app"; './src/app';
+import InviteTracker from "./src/app";
 
-export default InviteTracker
+export default InviteTracker;

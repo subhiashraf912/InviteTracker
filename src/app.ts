@@ -9,9 +9,7 @@ export default class InviteTracker {
       throw new Error("Client should be an instance of discord.js client");
     }
     this.client = client;
-  }
 
-  init() {
     this.client.on("inviteCreate", async (invite) => {
       const invites = await (invite.guild as Guild)?.invites.fetch();
       const codeUses = new Map();
@@ -29,8 +27,7 @@ export default class InviteTracker {
 
             this.guildInvites.set(guild.id, codeUses);
           })
-          .catch((err) => {
-          });
+          .catch((err) => {});
       });
     });
 
@@ -38,10 +35,14 @@ export default class InviteTracker {
       const cachedInvites = this.guildInvites.get(member.guild.id);
       const newInvites = await member.guild.invites.fetch();
       try {
+        console.log("in shit");
         const usedInvite = newInvites.find(
           (inv) => cachedInvites.get(inv.code) < (inv.uses || 0)
         );
+        console.log(usedInvite);
+
         if (!usedInvite) return;
+        console.log("returned");
         const inv = new invite({
           channel: usedInvite.channel,
           client: usedInvite.client,
@@ -64,7 +65,7 @@ export default class InviteTracker {
           targetUser: usedInvite.targetUser,
           temporary: usedInvite.temporary,
         });
-        
+
         this.client.emit("guildMemberAddWithInvite", member, inv);
       } catch (err) {}
 

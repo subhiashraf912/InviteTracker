@@ -23,6 +23,7 @@
 ## Getting Started
 
 Use this command in your terminal to install the package.
+
 ```js
 cd project-path
 npm i --save djs-invite-tracker
@@ -31,7 +32,6 @@ npm i --save djs-invite-tracker
 ## How to use
 
 ```js
-
 const Discord = require("discord.js");
 const InviteTracker = require("djs-invite-tracker").default;
 
@@ -43,7 +43,7 @@ const client = new Discord.Client({
   partials,
 });
 
-new InviteTracker(client).init();
+new InviteTracker(client);
 
 client.on("guildMemberAddWithInvite", (member, invite) => {
   console.log(member.user.tag);
@@ -51,8 +51,6 @@ client.on("guildMemberAddWithInvite", (member, invite) => {
 });
 
 client.login("token");
-
-
 ```
 
 ## Why djs-invite-tracker?
@@ -63,8 +61,6 @@ You need to do a lot of things to make the invite tracker and get the invite tha
 
 You can join our discord server to give us suggestions or reports [Discord Server](https://discord.gg/nQ55ZUSavA).
 
-
 ## Github
 
 You can find the source code on [Github](https://github.com/subhiashraf912/InviteTracker).
-
