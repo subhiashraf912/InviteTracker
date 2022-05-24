@@ -1,9 +1,12 @@
-import { Client, Guild } from "discord.js";
+import { Client, Collection, Guild, Snowflake } from "discord.js";
 import invite from "./invite";
 
 export default class InviteTracker {
   private client;
-  private guildInvites = new Map();
+  public guildInvites = new Collection<
+    Snowflake,
+    Collection<string, number | null>
+  >();
   constructor(client: Client) {
     if (!(client instanceof Client)) {
       throw new Error("Client should be an instance of discord.js client");
@@ -12,9 +15,9 @@ export default class InviteTracker {
 
     this.client.on("inviteCreate", async (invite) => {
       const invites = await (invite.guild as Guild)?.invites.fetch();
-      const codeUses = new Map();
+      const codeUses = new Collection<string, number | null>();
       invites.each((inv) => codeUses.set(inv.code, inv.uses));
-      this.guildInvites.set(invite.guild?.id, codeUses);
+      this.guildInvites.set(invite.guild?.id!, codeUses);
     });
 
     this.client.once("ready", () => {
@@ -22,7 +25,7 @@ export default class InviteTracker {
         guild.invites
           .fetch()
           .then((invites) => {
-            const codeUses = new Map();
+            const codeUses = new Collection<string, number | null>();
             invites.each((inv) => codeUses.set(inv.code, inv.uses));
 
             this.guildInvites.set(guild.id, codeUses);
@@ -35,14 +38,11 @@ export default class InviteTracker {
       const cachedInvites = this.guildInvites.get(member.guild.id);
       const newInvites = await member.guild.invites.fetch();
       try {
-        console.log("in shit");
         const usedInvite = newInvites.find(
-          (inv) => cachedInvites.get(inv.code) < (inv.uses || 0)
+          (inv) => (cachedInvites?.get(inv.code) || 0) < (inv.uses || 0)
         );
-        console.log(usedInvite);
 
         if (!usedInvite) return;
-        console.log("returned");
         const inv = new invite({
           channel: usedInvite.channel,
           client: usedInvite.client,
@@ -69,8 +69,9 @@ export default class InviteTracker {
         this.client.emit("guildMemberAddWithInvite", member, inv);
       } catch (err) {}
 
-      newInvites.each((inv) => cachedInvites.set(inv.code, inv.uses));
-      this.guildInvites.set(member.guild.id, cachedInvites);
+      newInvites.each((inv) => cachedInvites?.set(inv.code, inv.uses));
+      this.guildInvites.set(member.guild.id, cachedInvites!);
     });
+    return this;
   }
 }

@@ -1,4 +1,3 @@
-import { InviteTargetType } from "discord-api-types";
 import {
   Client,
   Guild,
@@ -7,7 +6,6 @@ import {
   InviteGuild,
   InviteStageInstance,
   PartialGroupDMChannel,
-  StageInstance,
   User,
 } from "discord.js";
 
@@ -54,7 +52,10 @@ export default class invite {
     this.temporary = options.temporary;
   }
 }
-
+const enum InviteTargetType {
+  STREAM = 1,
+  EMBEDDED_APPLICATION = 2,
+}
 interface inviteOptions {
   channel: GuildChannel | PartialGroupDMChannel;
   client: Client;
