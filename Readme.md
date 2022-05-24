@@ -1,3 +1,7 @@
+## Description
+
+A cool module that allows you to access the used invite in the memberAdd event!
+
 <p align="center">
   <a href="https://github.com/subhiashraf912/InviteTracker">
     <img src="https://cdn.discordapp.com/attachments/900321704289656872/913816621724876820/Comp_1_00000.png" height="128">
@@ -25,8 +29,10 @@
 Use this command in your terminal to install the package.
 
 ```js
-cd project-path
-npm i --save djs-invite-tracker
+npm i --save https://github.com/subhiashraf912/invitetracker
+
+DO NOT USE THE ONE IN NPM CAUSE IT IS OUT DATED AND I LOST MY PASSWORD xD
+latest version: 1.1.0 | npm version: 1.0.3
 ```
 
 ## How to use
